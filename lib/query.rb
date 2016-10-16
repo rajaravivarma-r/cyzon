@@ -1,4 +1,5 @@
 require 'digest/sha1'
+require 'base64'
 
 require 'hasher.rb'
 
@@ -16,7 +17,7 @@ class Query
   end
 
   def payload_to_payment_gateway
-    EncryptService.new(payload_with_sha).encrypt
+    Base64.encode64(encrypted_payload)
   end
 
   private
@@ -32,6 +33,10 @@ class Query
       fields << "#{field}=#{value}"
     end
     fields.join(SEPERATOR)
+  end
+
+  def encrypted_payload
+    EncryptService.new(payload_with_sha).encrypt
   end
 
   def validate!

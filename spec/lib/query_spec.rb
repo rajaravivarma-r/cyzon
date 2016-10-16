@@ -28,12 +28,13 @@ describe Query do
   end
 
   describe '#payload_to_payment_gateway' do
-    it 'encrypts the payload' do
+    it 'encrypts and encodes the payload' do
       payload_with_sha = 'payload with sha'
       encrypt_service = double('EncryptService', encrypt: 'scrambled text')
       expect(query).to receive(:payload_with_sha).and_return(payload_with_sha)
       expect(encrypt_service).to receive(:encrypt)
       expect(EncryptService).to receive(:new).with(payload_with_sha).and_return(encrypt_service)
+      expect(Base64).to receive(:encode64).with('scrambled text')
       query.payload_to_payment_gateway
     end
   end
