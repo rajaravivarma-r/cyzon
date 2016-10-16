@@ -5,8 +5,14 @@ describe Client do
   let(:client) { described_class.new }
 
   describe '#request_payment' do
-    it 'requests payment to the payment gateway' do
+    it 'prints the reponse when the reponse is intact' do
+      expect(STDOUT).to receive(:puts).with(/Response received.*/)
+      client.request_payment('http://examplepg.com/transaction/1')
+    end
 
+    it 'prints the error message to STDOUT and exits' do
+      expect(STDOUT).to receive(:puts).with(/Response is not intact/)
+      client.request_payment('http://examplepg.com/transaction/2')
     end
   end
 
