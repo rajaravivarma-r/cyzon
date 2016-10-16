@@ -9,10 +9,17 @@ class EncryptService
     @data = data
   end
 
+  def encrypt
+    cipher.encrypt
+    cipher.update(@data) + cipher.final
+  end
+
   private
 
   def cipher
-    OpenSSL::Cipher.new(SCHEME).tap do |cipher|
+    # This memoization is not for performance, but the `update` and `final` has to be called
+    # on the same cipher object.
+    @cipher ||= OpenSSL::Cipher.new(SCHEME).tap do |cipher|
       cipher.key = KEY
     end
   end
