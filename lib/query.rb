@@ -9,6 +9,7 @@ class Query
   def initialize(params)
     @params = params
     validate!
+    sanitize_params!
   end
 
   def payload
@@ -33,4 +34,7 @@ class Query
     end
   end
 
+  def sanitize_params!
+    @params.reject! { |key, val| !REQUIRED_FIELDS.include?(key) }
+  end
 end

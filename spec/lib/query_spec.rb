@@ -25,5 +25,10 @@ describe Query do
       expect { described_class.new(invalid_query_params) }.to raise_error(Query::InvalidParams, /amount/)
     end
 
+    it 'discards all keys which are not required' do
+      unwanted_params = query_params.update(unwanted_field: 2435)
+      query = described_class.new(unwanted_params)
+      expect(query.instance_variable_get(:@params).keys).not_to include(:unwanted_field)
+    end
   end
 end
