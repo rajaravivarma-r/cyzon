@@ -21,6 +21,13 @@ describe EncryptService do
     end
   end
 
+  describe '#decrypt' do
+    it 'decrypts the encrypted data' do
+      encrypted_data = encrypt_service.encrypt
+      decrypt_service = described_class.new(encrypted_data)
+      expect(decrypt_service.decrypt).to eql(data)
+    end
+  end
   # private methods
 
   describe 'scheme' do
