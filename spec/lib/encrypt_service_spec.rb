@@ -14,4 +14,13 @@ describe EncryptService do
     end
   end
 
+  # private methods
+
+  describe 'scheme' do
+    it 'uses AES-128-CBC' do
+      expect(OpenSSL::Cipher).to receive(:new).with('AES-128-CBC').and_call_original
+      described_class.new(data).send(:cipher)
+    end
+  end
+
 end
