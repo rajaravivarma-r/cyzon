@@ -1,17 +1,16 @@
+# Class used to build queries, sort of works like File.join
 class QueryBuilder
 
   SEPARATOR = '|'
 
   def self.join(*args)
-    fields = []
-    args.each do |arg|
+    args.collect do |arg|
       if arg.is_a?(String)
-        fields << arg
+        arg
       elsif arg.is_a?(Hash)
-        fields << arg.to_a.map { |k, v| "#{k}=#{v}" }.join(SEPARATOR)
+        arg.to_a.map { |key, value| "#{key}=#{value}" }.join(SEPARATOR)
       end
-    end
-    fields.join(SEPARATOR)
+    end.join(SEPARATOR)
   end
 
 end
