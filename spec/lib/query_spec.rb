@@ -40,21 +40,11 @@ describe Query do
   end
 
   # private methods
-  describe '#build_string' do
-    it "returns #{Query::SEPERATOR} seperated field=value string" do
-      expect(query.send(:build_string)).to eql('bank_ifsc_code=ICIC0000001|bank_account_number=11111111|'\
-                                               'amount=10000.0|merchant_transaction_ref=txn001|'\
-                                               'transaction_date=2014-11-14|payment_gateway_merchant_reference'\
-                                               '=merc001')
-    end
-  end
 
   describe '#payload_with_sha' do
     it "returns #{Query::SEPERATOR} seperated string with hash=sha(build_string)" do
-      sample_query_string = 'one=1'
-      expect(query).to receive(:build_string).and_return(sample_query_string)
-      expect(query.send(:payload_with_sha)).
-        to eql("#{sample_query_string}|hash=#{Hasher.digest(sample_query_string)}")
+      query_string = QueryBuilder.join(query_params)
+      expect(query.send(:payload_with_sha)).to eql("#{query_string}|hash=#{Hasher.digest(query_string)}")
     end
   end
 end

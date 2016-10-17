@@ -23,16 +23,8 @@ class Query
   private
 
   def payload_with_sha
-    plain_string = build_string
-    "#{plain_string}|hash=#{Hasher.digest(plain_string)}"
-  end
-
-  def build_string
-    fields = []
-    @params.each do |field, value|
-      fields << "#{field}=#{value}"
-    end
-    fields.join(SEPERATOR)
+    actual_payload = QueryBuilder.join(@params)
+    QueryBuilder.join(actual_payload, hash: Hasher.digest(actual_payload))
   end
 
   def encrypted_payload
