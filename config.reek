@@ -1,0 +1,9 @@
+---
+
+### Generic smell configuration
+
+# You can use filters to silence Reek warnings.
+# Either because you simply disagree with Reek (we are not the police) or
+# because you want to fix this at a later point in time.
+NestedIterators:
+  max_allowed_nesting: 2
