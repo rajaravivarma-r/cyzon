@@ -7,7 +7,6 @@ class Query
 
   class InvalidParams < StandardError; end
 
-  SEPERATOR = '|'
   REQUIRED_FIELDS = %i[bank_ifsc_code bank_account_number amount merchant_transaction_ref
                      transaction_date payment_gateway_merchant_reference].sort
   def initialize(params)

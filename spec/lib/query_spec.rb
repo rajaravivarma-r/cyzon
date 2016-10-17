@@ -42,7 +42,7 @@ describe Query do
   # private methods
 
   describe '#payload_with_sha' do
-    it "returns #{Query::SEPERATOR} seperated string with hash=sha(build_string)" do
+    it "returns #{QueryBuilder::SEPARATOR} seperated string with hash=sha(build_string)" do
       query_string = QueryBuilder.join(query_params)
       expect(query.send(:payload_with_sha)).to eql("#{query_string}|hash=#{Hasher.digest(query_string)}")
     end
